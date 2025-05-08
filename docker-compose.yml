@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  sub-service:
+    image: eclipse-temurin:17-jdk
+    container_name: sub-service
+    ports:
+      - "8095:8095"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+    volumes:
+      - ./target/SubscriptionService-1.0-SNAPSHOT.jar:/app.jar
+    entrypoint: ["java", "-jar", "/app.jar"]
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge

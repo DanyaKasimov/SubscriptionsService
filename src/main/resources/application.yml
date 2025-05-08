@@ -1,0 +1,32 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: sub-service
+  datasource:
+    url: jdbc:postgresql://localhost:5433/db
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+logging:
+  file:
+    path: ./logs
+  level:
+    root: info
+    org:
+      springframework:
+        web: warn
+      hibernate: error
+    web: warn
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui

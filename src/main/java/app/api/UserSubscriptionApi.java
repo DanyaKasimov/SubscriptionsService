@@ -74,11 +74,11 @@ public interface UserSubscriptionApi {
     @ResponseStatus(HttpStatus.OK)
     List<SubscriptionDto> getSubscriptions(@PathVariable @Valid final Long id);
 
-    @Operation(description = "Получение списка подписок пользователя.")
+    @Operation(description = "Удаление подписки.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Список получен."
+                    description = "Подписка удалена."
             ),
             @ApiResponse(
                     responseCode = "404",
